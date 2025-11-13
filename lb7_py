@@ -1,0 +1,62 @@
+class UnionFind:
+    def __init__(self, n):
+        # Создаем массив родительских вершин, изначально каждая вершина сама себе родитель
+        self.parent = list(range(n))
+    
+    def find(self, x):
+        # Ищем корень вершины х
+        if self.parent[x] != x:
+            # Применяем сжатие пути для ускорения последующих поисков
+            self.parent[x] = self.find(self.parent[x])
+        return self.parent[x]
+    
+    def union(self, x, y):
+        # Объединение двух компонент путем изменения родителя одной компоненты на другого
+        rootX = self.find(x)
+        rootY = self.find(y)
+        
+        if rootX != rootY:
+            self.parent[rootX] = rootY
+
+def kruskal(graph):
+    """
+    Реализация алгоритма Крускала для нахождения минимального остовного дерева.
+    :param graph: Список рёбер графа вида [(вес_ребра, вершина1, вершина2)]
+    :return: Минимальное остовное дерево (список рёбер) и суммарный вес
+    """
+    V = len(set(v for _, u, v in graph))  # Количество уникальных вершин
+    mst_edges = []  # Итоговые рёбра минимального остовного дерева
+    total_weight = 0  # Суммарный вес всех рёбер MST
+    uf = UnionFind(V)  # Структура для отслеживания циклов
+
+    # Сортируем рёбра по возрастанию их весов
+    sorted_graph = sorted(graph, key=lambda edge: edge[0])
+
+    for weight, u, v in sorted_graph:
+        # Проверяем, образуют ли вершины u и v цикл
+        if uf.find(u) != uf.find(v):  # Если вершины находятся в разных компонентах
+            uf.union(u, v)           # Объединяем компоненты
+            mst_edges.append((weight, u, v))  # Добавляем ребро в минимальный остов
+            total_weight += weight   # Увеличиваем общую стоимость
+
+    return mst_edges, total_weight
+
+
+# Пример входных данных
+graph = [
+    (1, 0, 1),
+    (2, 1, 2),
+    (3, 2, 3),
+    (4, 3, 4),
+    (5, 4, 5),
+    (6, 5, 0),
+    (7, 0, 2),
+    (8, 1, 3),
+    (9, 2, 4)
+]
+
+mst_edges, total_weight = kruskal(graph)
+print("Минимальное остовное дерево:", mst_edges)
+print("Общий вес:", total_weight)
+#Минимальное остовное дерево: [(1, 0, 1), (2, 1, 2), (3, 2, 3), (4, 3, 4), (5, 4, 5)]
+#Общий вес: 15
