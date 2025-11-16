@@ -1,4 +1,4 @@
-#Бинарная куча
+//Бинарная куча
 import java.util.PriorityQueue;
 public class BinaryHeapExample {
     public static void main(String[] args) {
@@ -13,7 +13,7 @@ public class BinaryHeapExample {
     }
 }
 
-#Биноминальня куча
+//Биноминальня куча
 import org.apache.commons.collections.Bag;
 import org.apache.commons.collections.bag.HashBag;
 public class BinomialHeapExample {
@@ -25,7 +25,7 @@ public class BinomialHeapExample {
     }
 }
 
-#Куча Фибоначчи
+//Куча Фибоначчи
 import com.google.common.collect.MinMaxPriorityQueue;
 public class FibonacciHeapExample {
     public static void main(String[] args) {
@@ -36,7 +36,7 @@ public class FibonacciHeapExample {
     }
 }
 
-#Хэш-таблица
+//Хэш-таблица
 #include <iostream>
 #include <unordered_map>
 int main() {
